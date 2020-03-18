@@ -312,9 +312,49 @@ because,
        c2 = m4 + n4 + 2* m2 * n2
 */
 const pythagoreanTriplet = () => {
-    let i=3;
+    let m=2,a,b,c;
     let found = false;
     while(!found){
-        
+        for(let n=1;n<m;n++){
+            a = m*m -n*n;
+            b= 2*m*n
+            c= m*m + n*n;
+            if(a+b+c ===1000){
+                found = true;
+                break;
+            }
+        }
+        m++;
     }
+    console.log('Problem 9: Pythagorean Triplet: ', a*b*c);
 }
+
+pythagoreanTriplet();
+
+
+/*
+Summation of primes:
+Find the sum of all the primes below two million.
+*/
+
+const summationPrimes = (no) =>{
+    let primeNumbers =[2];
+    let sum =2;
+    for(i =3;i<=no;i=i+2){
+        let isPrime = true;
+        for(let j=0;j< primeNumbers.length;j++){
+            if(i%primeNumbers[j] === 0){
+                isPrime = false;
+                break;
+            }
+        }
+        if(isPrime){
+            primeNumbers.push(i);
+            sum +=i;
+        }
+    }
+
+    console.log('Problem 10: Summation Primes:', sum);
+}
+
+summationPrimes(2000000);
