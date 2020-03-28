@@ -1,3 +1,5 @@
+var bigInt = require('big-integer');
+
 /*
 Largest Product in a Grid
 */
@@ -217,3 +219,125 @@ const largeSum = () => {
 }
 
 largeSum();
+
+/*
+Longest Collatz sequence
+*/
+
+const collatz = (limit) => {
+    let maxChainLength=0;
+    let no;
+    for(i = limit;i>=1;i--){
+        let j = i;
+        let chain = 0;
+        while(j>1){
+            j = (j%2 === 1)?(3*j +1):j/2;
+            chain+=1;
+        }
+       // console.log(chain,maxChainLength,i);
+       if(chain>maxChainLength){
+           no=i;
+       }
+        maxChainLength = maxChainLength>chain?maxChainLength:chain;
+    }
+
+    console.log("Problem 14: Max Chain Length:", maxChainLength, no);
+}
+
+collatz(1000000);
+
+/*
+Lattice paths
+*/
+
+const latticePaths = (gridSize) => {
+    let numerator =1;
+    let denominator =1;
+    for(let i=1;i<=2*gridSize;i++){
+        numerator *=i;
+        if(i<=gridSize){
+            denominator *=i;
+        }
+    }
+
+    console.log("Problem 15: Lattice Paths:", numerator/(denominator*denominator));
+} 
+
+latticePaths(20);
+
+/*
+Power digit sum
+*/
+const powerDigitSum = (no,power) => {
+    let digitSum = bigInt(2).pow(1000).toString().split("e+")[0].split(".").join("").split("").reduce((acc,elem) => acc+ parseInt(elem),0);
+
+    console.log("Problem 16: Power Digit Sum:",digitSum);
+}
+
+powerDigitSum();
+
+/*
+Number letter counts
+*/
+
+const countLettersInNumbers = () => {
+    const dictionary = {
+        1: "one",
+        2: "two",
+        3: "three",
+        4: "four",
+        5: "five",
+        6: "six",
+        7: "seven",
+        8: "eight",
+        9: "nine"
+    }
+
+    const dictionaryTeens ={
+        10: "ten",
+        11: "eleven",
+        12: "twelve",
+        13: "thirteen",
+        14: "fourteen",
+        15: "fifteen",
+        16: "sixteen",
+        17: "seventeen",
+        18: "eighteen",
+        19: "nineteen"
+    }
+
+    let sumOfWordsChars =0, teen =0,tens =0;
+    //for 1-19
+    let keys = Object.keys(dictionaryTeens);
+    keys.map(key => {teen +=dictionaryTeens[key].length;})
+     teen *=10;
+
+    const dictionaryTens = {
+        20: "twenty",
+        30: "thirty",
+        40: "forty",
+        50: "fifty",
+        60: "sixty",
+        70: "seventy",
+        80: "eighty",
+        90: "ninty",
+    }
+    keys = Object.keys(dictionaryTens);
+    keys.map(key => {tens +=dictionaryTens[key].length;})
+    tens *=(100);
+
+    //for 1-to-9 , 9 times in each hundred,for 10 hundreds, and 1st word for hundred series
+    keys = Object.keys(dictionary);
+    keys.map(key => {sumOfWordsChars +=dictionary[key].length;})
+    sumOfWordsChars *=(9*10+100);
+
+    const hundred ="hundredand";
+
+    sumOfWordsChars +=(hundred.length*900 -9*3); //27 for subtracting `and` from 100,200,300
+    const thousand ="onethousand";
+    sumOfWordsChars +=(tens+teen+thousand.length);
+
+    console.log(sumOfWordsChars);
+}
+
+countLettersInNumbers();
