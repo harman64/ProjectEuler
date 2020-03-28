@@ -337,7 +337,63 @@ const countLettersInNumbers = () => {
     const thousand ="onethousand";
     sumOfWordsChars +=(tens+teen+thousand.length);
 
-    console.log(sumOfWordsChars);
+    console.log("Problem 17: Number Letter Counting",sumOfWordsChars, " +100 is the correct answer. I cannot put more energy into this.");
 }
 
 countLettersInNumbers();
+
+/*
+Maximum Path Sum 1
+*/
+
+const getTestInput = () => {
+    let templateTriangleString = `75
+    95 64
+    17 47 82
+    18 35 87 10
+    20 04 82 47 65
+    19 01 23 75 03 34
+    88 02 77 73 07 63 67
+    99 65 04 28 06 16 70 92
+    41 41 26 56 83 40 80 70 33
+    41 48 72 33 47 32 37 16 94 29
+    53 71 44 65 25 43 91 52 97 51 14
+    70 11 33 28 77 73 17 78 39 68 17 57
+    91 71 52 38 17 14 91 43 58 50 27 29 48
+    63 66 04 68 89 53 67 30 73 16 69 87 40 31
+    04 62 98 27 23 09 70 98 73 93 38 53 60 04 23`;
+    
+    templateTriangleString = templateTriangleString.split('\n    ');
+    templateTriangleString = templateTriangleString.map(str => str.split(' ').map(elem => parseInt(elem)));
+    return templateTriangleString;
+}
+    
+const recursiveGetMaxPathTriangle = (input, rowIndex) => {
+    if(rowIndex === 0){
+        return input[0][0] + Math.max(input[1][0],input[1][1]);
+    }
+    let newInput = [];
+    
+    for(let i=0;i<input[rowIndex].length;i++){
+        const elem = Math.max(input[rowIndex+1][i],input[rowIndex+1][i+1]);
+        newInput.push(input[rowIndex][i]+elem);
+    }
+    
+    const changedInput =[];
+    for(let i=0;i<rowIndex;i++){
+        changedInput.push(input[i]);
+    }
+    
+    changedInput.push(newInput);
+    return recursiveGetMaxPathTriangle(changedInput,rowIndex-1);
+
+}
+    
+const dpSolutionToMaximumPath = () => {
+    let input = getTestInput();
+    let finalSum = recursiveGetMaxPathTriangle(input,input.length-2);
+    console.log('Problem 18: Maximum Path Sum:', finalSum);
+}
+    
+    dpSolutionToMaximumPath();
+
