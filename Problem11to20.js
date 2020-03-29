@@ -395,5 +395,46 @@ const dpSolutionToMaximumPath = () => {
     console.log('Problem 18: Maximum Path Sum:', finalSum);
 }
     
-    dpSolutionToMaximumPath();
+dpSolutionToMaximumPath();
+
+/*
+counting Sundays
+*/
+
+const noOfSundays = () => {
+    let sundays =0;
+    let startDate = new Date('01-01-1901');
+    startDate.setDate(startDate.getDate()+1);
+    let endDate = new Date('01-01-2001');
+    while(startDate<=endDate){
+        if(startDate.getDay() === 0){
+            sundays +=1;
+        }
+        startDate.setMonth(startDate.getMonth()+1);
+    }
+
+    console.log('Problem 19: No of Sundays on 1st of month from 1901 to 2000 are:',sundays);
+}
+
+noOfSundays();
+
+/*
+Factorial Digit Sum
+*/
+
+const sumOfDigitsOF100Factorial = () => {
+    let factorial =BigInt(1);
+    for(let i=2;i<100;i++){
+        factorial *=BigInt(i);
+    }
+
+    let factorialString = factorial.toString();
+    factorialString = factorialString.split('n')[0].split('');
+    let digits = factorialString.map(elem => parseInt(elem));
+    let sumDigits =0;
+    digits.map(digit => sumDigits +=digit);
+    console.log('Problem 20: Factorial Digit sum of 100 is:',sumDigits);
+}
+
+sumOfDigitsOF100Factorial();
 
