@@ -110,3 +110,40 @@ const nonAbundantNosSums = () => {
 }
 
 nonAbundantNosSums();
+
+/*
+Lexicographic Permutations
+*/
+
+const swap = (str, index1, index2) => {
+    if(index1 == index2){
+        return str;
+    }
+    let first = str.substring(0, index1);
+    let second = str.substring(index1+1,index2);
+    let third = (index2<str.length-1)?str.substring(index2+1,str.length):'';
+
+    return  (first+str[index2]+second+str[index1]+third);
+}
+
+const permute = (input, left,right, arr) => {
+    if(left === right){
+        arr.push(input);
+    }else{
+        for(let i=left;i<=right;i++){
+            //swap(left,i)
+            let str = swap(input,left,i);
+            permute(str, left+1,right,arr);
+        }
+    }
+    return arr;
+}
+
+const printMillionthPermutation = () => {
+    let arr = permute('0123456789', 0,9, []);
+    arr= arr.sort();
+    console.log('Problem 24: Lexicographic Permutations', arr[999999]);
+}
+
+printMillionthPermutation();
+
